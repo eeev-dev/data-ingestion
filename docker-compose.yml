@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  ingestion:
+    build: .
+    container_name: ingestion_service
+    ports:
+      - "9000:8080"
+    environment:
+      - DJANGO_SETTINGS_MODULE=ingestion.settings

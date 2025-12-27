@@ -24,7 +24,11 @@ class DocumentIngestSerializer(serializers.Serializer):
         required=False,
         input_formats=["%d-%m-%Y"]
     )
-    company = serializers.CharField(required=False, allow_blank=True)
+    company = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        allow_null=True
+    )
     settings = SettingsSerializer()
     tags = serializers.ListField(
         child=serializers.RegexField(

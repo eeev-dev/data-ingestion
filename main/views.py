@@ -6,7 +6,7 @@ import requests
 
 from .serializers import DocumentIngestSerializer
 
-DATA_FILTRATION_SERVICE_URL = "http://filtration_service:8080/filter"
+DATA_FILTRATION_SERVICE_URL = "http://13.62.126.35:8000/filter"
 
 class DataIngestionView(APIView):
     def post(self, request):

@@ -12,27 +12,23 @@ class DataIngestionView(APIView):
     def post(self, request):
         serializer = DocumentIngestSerializer(data=request.data)
 
-        if not serializer.is_valid():
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        serializer.is_valid(raise_exception=True)
 
-        validated_data = serializer.validated_data
+        # данные, уже готовые для JSON
+        payload = serializer.data
 
         # добавляем дату и время ingestion
-        validated_data["data_ingestion_datetime"] = now().strftime(
+        payload["data_ingestion_datetime"] = now().strftime(
             "%d-%m-%Y %H:%M:%S"
         )
 
-        # отправляем дальше в Data Filtration service
         try:
             response = requests.post(
                 DATA_FILTRATION_SERVICE_URL,
-                json=validated_data,
+                json=payload,
                 timeout=5
             )
-        except requests.RequestException as e:
+        except requests.RequestException:
             return Response(
                 {"error": "Failed to forward data to filtration service"},
                 status=status.HTTP_502_BAD_GATEWAY

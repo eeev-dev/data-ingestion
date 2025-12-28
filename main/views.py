@@ -62,11 +62,7 @@ class DataIngestionView(APIView):
     def post(self, request):
         serializer = DocumentIngestSerializer(data=request.data)
 
-        if not serializer.is_valid():
-            return Response(
-                {"accepted": False, "reason": "invalid body"},
-                status=status.HTTP_200_OK
-            )
+        serializer.is_valid(raise_exception=True)
 
         payload = serializer.data
         payload["data_ingestion_datetime"] = now().strftime(

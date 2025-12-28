@@ -16,7 +16,10 @@ def has_ignore_tag(tags: Any) -> bool:
 
 
 def to_storage_format(doc: Dict[str, Any]) -> Dict[str, Any]:
+    doc_copy = doc.copy()
+    doc_copy.pop("document_id", None)
+
     return {
         "document_id": doc.get("document_id"),
-        "document_data": doc,
+        "document_data": doc_copy,
     }

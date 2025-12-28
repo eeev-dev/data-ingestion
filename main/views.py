@@ -43,6 +43,7 @@ def filter_and_forward(doc: dict) -> dict:
         pass  # по ТЗ ошибок не возвращаем
 
     payload = to_storage_format(doc)
+    print([payload])
 
     # 5️⃣ Отправка в storage
     try:
